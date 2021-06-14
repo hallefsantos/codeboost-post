@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Generator</title>
+
+  <link rel="stylesheet" href="./tailwind.css">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Sora', sans-serif;
+    }
+  </style>
+
+  <script src="//unpkg.com/alpinejs" defer></script>
+</head>
+<body 
+  class="bg-black"
+  x-data="app()"
+>
+    <div class="px-10 py-5 bg-white">
+      <div>
+        <h2 class="text-center font-bold text-4xl">Codeboost Post Generator</h2>
+        
+        <form  class="max-w-md mt-10 mx-auto">
+          <div class="minhaExperienciaForm__foto"> 
+            <img x-show="foto" class="w-20 h-20 mb-2 object-cover" x-ref="suaFotoimg" src=""> 
+            <span class="suaFoto">
+              <input x-on:input="insereFoto" type="file" name="suaFoto" size="40" class="wpcf7-form-control wpcf7-file" accept=".jpg,.jpeg,.png" aria-invalid="false" data-com.bitwarden.browser.user-edited="yes">
+            </span>
+          </div>
+
+          <div class="mt-5">
+            <input x-model="nome" class="w-full" type="text" placeholder="Nome" />
+          </div>
+          <div class="grid grid-cols-2 gap-5 mt-5">
+            <input x-model="cargo" type="text" placeholder="Cargo" />
+            <input x-model="empresa" type="text" placeholder="Empresa" />
+          </div>
+          
+          <div class="flex justify-center mt-5">
+            <button class="px-5 py-2 bg-green-500 text-white rounded-sm">Download</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- <div class="flex justify-center"> -->
+      <div class="w-[1080px] post-container relative">
+        <h1 class="post-nome absolute top-[335px] left-[150px] max-w-[360px] text-[67px] text-white leading-none font-bold">
+          <span x-text="nome"></span>
+        </h1>
+        <h2 class="absolute top-[490px] left-[150px] max-w-[600px] text-[1.03rem] text-gray-300 leading-none font-bold">
+          <span x-text="cargo"></span> <span x-show="empresa">|</span> <span x-text="empresa"></span>
+        </h2>
+        <div 
+          x-ref="postFoto"
+          class="absolute right-[65px] top-[160px] w-[356px] h-[441px] bg-center bg-cover"
+        >
+          <img class="absolute left-2 top-20 transform -translate-x-1/2 w-64" src="./img/badge.png" alt="">
+        </div>
+        <img src="./img/post.png" alt="">
+      </div>
+    <!-- </div> -->
+
+  <script type="module" src="./scripts.js"></script>
+
+  <script>
+    function app() {
+      return {
+        nome: null,
+        cargo: null,
+        empresa: null,
+        foto: null,
+        insereFoto() {
+          this.foto = URL.createObjectURL(event.target.files[0])
+          this.$refs.suaFotoimg.src = this.foto
+          this.$refs.postFoto.style.backgroundImage = `url(${this.foto})`
+        },
+      }
+    }
+  </script>
+</body>
+</html>
